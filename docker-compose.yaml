@@ -23,12 +23,14 @@ services:
     container_name: php
     volumes:
       - ./src:/var/www/html
+    user: 1000:1000
     networks:
       - laravel
   #composer
   composer:
     image: composer:latest
     container_name: composer
+    user: 1000:1000
     volumes:
       - ./src:/var/www/html
     working_dir: /var/www/html
@@ -74,7 +76,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     platform: linux/amd64
-    container_name: phpmyadmin
+    container_name: phpmyadmin_bd
     depends_on:
       - mysql
     restart: unless-stopped
