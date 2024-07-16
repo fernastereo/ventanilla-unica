@@ -4,8 +4,6 @@ import TheWelcome from './components/TheWelcome.vue'
 import { ref } from 'vue'
 import axios from 'axios'
 
-axios.defaults.withCredentials = true;
-
 const form = ref({
   email: null,
   password: null
@@ -14,16 +12,40 @@ const form = ref({
 const user = ref();
 
 const onLogin = async () => {
-  await axios.get('http://localhost:8000/sanctum/csrf-cookie');
-  await axios.post('http://localhost:8000/api/login', {
+  console.log(form.value);
+  await axios.get('http://localhost:5000/sanctum/csrf-cookie');
+  await axios.post('http://localhost:5000/login', {
     email: form.value.email,
     password: form.value.password
+  },
+  {
+    headers: {
+      accept: 'application/json',
+      'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
+    },
+    withCredentials: true
   });
 
-  let {data} = await axios.get('http://localhost:8000/api/user');
+  let {data} = await axios.get('http://localhost:5000/api/user');
   user.value = data;
 }
 
+
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
 </script>
 
 <template>
