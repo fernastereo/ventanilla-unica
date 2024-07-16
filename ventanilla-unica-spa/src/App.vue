@@ -1,20 +1,58 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
+import { ref } from 'vue'
+import axios from 'axios'
+
+axios.defaults.withCredentials = true;
+
+const form = ref({
+  email: null,
+  password: null
+});
+
+const user = ref();
+
+const onLogin = async () => {
+  await axios.get('http://localhost:8000/sanctum/csrf-cookie');
+  await axios.post('http://localhost:8000/api/login', {
+    email: form.value.email,
+    password: form.value.password
+  });
+
+  let {data} = await axios.get('http://localhost:8000/api/user');
+  user.value = data;
+}
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <div>
+    <header>
+      <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
+      <div class="wrapper">
+        <HelloWorld msg="You did it!!" />
+      </div>
+    </header>
 
-  <main>
-    <TheWelcome />
-  </main>
+    <main>
+      {{ user }}
+      <form @submit.prevent="onLogin">
+        <div>
+          <label for="email">Email</label>
+          <input id="email" type="email" v-model="form.email" required />
+        </div>
+
+        <div>
+          <label for="password">Password</label>
+          <input id="password" type="password" v-model="form.password" required />
+        </div>
+
+        <button>Login</button>
+      </form>
+    </main>
+  </div>
 </template>
 
 <style scoped>
