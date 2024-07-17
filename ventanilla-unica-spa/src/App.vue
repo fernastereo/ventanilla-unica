@@ -4,6 +4,9 @@ import TheWelcome from './components/TheWelcome.vue'
 import { ref } from 'vue'
 import axios from 'axios'
 
+axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
+
 const form = ref({
   email: null,
   password: null
@@ -12,40 +15,34 @@ const form = ref({
 const user = ref();
 
 const onLogin = async () => {
-  console.log(form.value);
-  await axios.get('http://localhost:5000/sanctum/csrf-cookie');
+  // console.log(form.value);
+  await axios.get('http://localhost:5000/sanctum/csrf-cookie',
+    {
+      withCredentials: true
+    }
+  );
   await axios.post('http://localhost:5000/login', {
-    email: form.value.email,
-    password: form.value.password
-  },
-  {
-    headers: {
-      accept: 'application/json',
-      'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
+      email: form.value.email,
+      password: form.value.password
     },
-    withCredentials: true
-  });
+    {
+      headers: {
+        accept: 'application/json',
+        'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
+      },
+      withCredentials: true
+    }
+  );
 
   let {data} = await axios.get('http://localhost:5000/api/user');
   user.value = data;
 }
 
-
-
 function getCookie(name) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-    const cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === (name + '=')) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
+  const cookie = document.cookie.split('; ').find(item => item.startsWith(name + '='));
+  return cookie ? decodeURIComponent(cookie.split('=')[1]) : null;
 }
+
 </script>
 
 <template>
@@ -63,12 +60,12 @@ function getCookie(name) {
       <form @submit.prevent="onLogin">
         <div>
           <label for="email">Email</label>
-          <input id="email" type="email" v-model="form.email" required />
+          <input id="email" type="email" v-model="form.email"/>
         </div>
 
         <div>
           <label for="password">Password</label>
-          <input id="password" type="password" v-model="form.password" required />
+          <input id="password" type="password" v-model="form.password"/>
         </div>
 
         <button>Login</button>
