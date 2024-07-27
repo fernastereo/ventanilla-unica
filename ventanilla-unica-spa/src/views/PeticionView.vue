@@ -64,6 +64,12 @@
                 <label for="inputTipoServicio" class="form-control-sm">Tipo de Solicitud</label>
                 <select class="form-select form-select-sm" id="inputTipoServicio" v-model="form.tipoPeticionId" aria-label="">
                   <option selected>-- Seleccione el Servicio Deseado --</option>
+                  <option value="1">Aclaratoria de Licencia</option>
+                  <option value="2">Anexos de Radicados en Curso</option>
+                  <option value="3">Derecho de Peticion</option>
+                  <option value="4">Desistimiento de Licencia</option>
+                  <option value="5">Informacion</option>
+                  <option value="5">Quejas - Reclamos</option>
                   <option v-for="tipo in tipopeticions" :key="tipo.id" :value="tipo.id">{{ tipo.descripcion }}</option>
                 </select>
               </div>
