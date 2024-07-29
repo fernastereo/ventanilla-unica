@@ -23,6 +23,12 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Configura el directorio de trabajo
 WORKDIR /var/www/html
 
+# Establece la variable de entorno para Composer
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+# Instala las dependencias de Composer
+RUN composer install --no-interaction --optimize-autoloader
+
 # Cambia el propietario de los archivos
 RUN chown -R www-data:www-data /var/www
 
@@ -32,4 +38,3 @@ EXPOSE 9000
 # Ejecuta PHP-FPM en el primer plano
 CMD ["php-fpm"]
 
-RUN composer install --no-interaction --optimize-autoloader
