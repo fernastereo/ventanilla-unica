@@ -24,6 +24,8 @@ services:
     volumes:
       - ./ventanilla-unica-api:/var/www/html
     user: 1000:1000
+    environment:
+      - COMPOSER_ALLOW_SUPERUSER=1
     networks:
       - laravel
   # #composer
