@@ -29,6 +29,9 @@ COPY ./ventanilla-unica-api/composer.json ./ventanilla-unica-api/composer.lock* 
 # Establece la variable de entorno para Composer
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
+# Verifica si los archivos están presentes
+RUN ls -la /var/www/html
+
 # Instala las dependencias de Composer
 RUN composer install --no-interaction --optimize-autoloader
 
@@ -43,4 +46,3 @@ EXPOSE 9000
 
 # Ejecuta PHP-FPM en el primer plano
 CMD ["php-fpm"]
-
