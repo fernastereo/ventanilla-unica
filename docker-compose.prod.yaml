@@ -16,42 +16,58 @@ services:
     networks:
       - laravel
   #php
-  php:
+  # php:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: php
+  #   volumes:
+  #     - ./ventanilla-unica-api:/var/www/html
+  #   user: 1000:1000
+  #   networks:
+  #     - laravel
+  #api
+  api:
     build:
-      context: .
+      args:
+        user: laravel
+        uid: 1000
+      context: ./
       dockerfile: Dockerfile
-    container_name: php
+    image: api
+    container_name: api-php
+    restart: unless-stopped
+    working_dir: /var/www/html/
     volumes:
       - ./ventanilla-unica-api:/var/www/html
-    user: 1000:1000
     networks:
       - laravel
   #composer
-  composer:
-    image: composer:latest
-    container_name: composer
-    user: laravel:1000
-    volumes:
-      - ./ventanilla-unica-api:/var/www/html
-    working_dir: /var/www/html
-    depends_on:
-      - php
-    networks:
-      - laravel
-  #artisan
-  artisan:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: artisan
-    volumes:
-      - ./ventanilla-unica-api:/var/www/html
-    depends_on:
-      - mysql
-    working_dir: /var/www/html
-    entrypoint: ['php', '/var/www/html/artisan']
-    networks:
-      - laravel
+  # composer:
+  #   image: composer:latest
+  #   container_name: composer
+  #   user: 1000:1000
+  #   volumes:
+  #     - ./ventanilla-unica-api:/var/www/html
+  #   working_dir: /var/www/html
+  #   depends_on:
+  #     - php
+  #   networks:
+  #     - laravel
+  # #artisan
+  # artisan:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: artisan
+  #   volumes:
+  #     - ./ventanilla-unica-api:/var/www/html
+  #   depends_on:
+  #     - mysql
+  #   working_dir: /var/www/html
+  #   entrypoint: ['php', '/var/www/html/artisan']
+  #   networks:
+  #     - laravel
   #mysql
   mysql:
     image: mysql:5.7
@@ -97,14 +113,14 @@ services:
     entrypoint: ['npm']
     networks:
       - laravel
-  mailhog:
-    image: mailhog/mailhog:latest
-    container_name: mailhog
-    ports:
-      - "1025:1025"
-      - "5015:8025"
-    networks:
-      - laravel
+  # mailhog:
+  #   image: mailhog/mailhog:latest
+  #   container_name: mailhog
+  #   ports:
+  #     - "1025:1025"
+  #     - "5015:8025"
+  #   networks:
+  #     - laravel
   # Servicio para el frontend de Vue.js (dev)
   ventanilla-unica-spa-dev:
     # conteneddor con node para el frontend en desarrollo
