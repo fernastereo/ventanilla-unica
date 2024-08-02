@@ -64,12 +64,12 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: bajbciu2dbwc
-      MYSQL_USER: laravel_user
-      MYSQL_PASSWORD: ventanillaunicacu2vaAZ
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
+      - MYSQL_DATABASE=laravel
+      - MYSQL_ROOT_PASSWORD=bajbciu2dbwc
+      - MYSQL_USER=laravel_user
+      - MYSQL_PASSWORD=ventanillaunicacu2vaAZ
+      - SERVICE_TAGS=dev
+      - SERVICE_NAME=mysql
     networks:
       - laravel
   #phpmyadmin
