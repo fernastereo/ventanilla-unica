@@ -57,7 +57,7 @@ services:
     image: mysql:5.7
     platform: linux/amd64
     container_name: mysql
-    restart: never
+    restart: unless-stopped
     tty: true
     ports:
       - "9090:3306"
