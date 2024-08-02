@@ -57,7 +57,7 @@ services:
     image: mysql:5.7
     platform: linux/amd64
     container_name: mysql
-    restart: unless-stopped
+    restart: never
     tty: true
     ports:
       - "9090:3306"
@@ -66,9 +66,10 @@ services:
     environment:
       MYSQL_DATABASE: laravel
       MYSQL_ROOT_PASSWORD: bajbciu2dbwc
+      MYSQL_USER: laravel_user
+      MYSQL_PASSWORD: ventanillaunicacu2vaAZ
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
-      MYSQL_ROOT_HOST: localhost
     networks:
       - laravel
   #phpmyadmin
