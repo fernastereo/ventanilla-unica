@@ -62,7 +62,7 @@ services:
     ports:
       - "9090:3306"
     volumes:
-      - ./mysqlDB:/var/lib/mysql
+      - db_data:/var/lib/mysql
     environment:
       MYSQL_DATABASE: laravel
       MYSQL_ROOT_PASSWORD: bajbciu2dbwc
