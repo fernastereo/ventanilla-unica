@@ -54,10 +54,9 @@ services:
   #     - laravel
   #mysql
   mysql:
-    image: mariadb
+    image: mysql
     platform: linux/amd64
-    container_name: mariadb
-    restart: unless-stopped
+    container_name: mysql
     tty: true
     ports:
       - "9090:3306"
@@ -68,8 +67,6 @@ services:
       MYSQL_ROOT_PASSWORD: bajbciu2dbwc
       MYSQL_USER: laravel_user
       MYSQL_PASSWORD: ventanillaunicacu2vaAZ
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
     networks:
       - laravel
   #phpmyadmin
