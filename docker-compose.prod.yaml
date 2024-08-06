@@ -133,7 +133,7 @@ services:
 networks:
   laravel:
 volumes:
-  db_data:
+  dbdata:
 # docker-compose up -d --build
 # docker-compose run --rm artisan [COMMAND]
 # docher-compose run --rm composer [COMMAND] (create-project laravel/laravel .)
