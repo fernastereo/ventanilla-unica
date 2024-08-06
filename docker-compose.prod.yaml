@@ -54,9 +54,9 @@ services:
   #     - laravel
   #mysql
   mysql:
-    image: mysql
+    image: mariadb
     platform: linux/amd64
-    container_name: mysql
+    container_name: mariadb
     restart: unless-stopped
     tty: true
     ports:
