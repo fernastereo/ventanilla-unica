@@ -54,20 +54,17 @@ services:
       - laravel
   #mysql
   mysql:
-    image: mysql:8.0
-    platform: linux/amd64
+    image: mysql:5.7.22
     container_name: mysql
     restart: unless-stopped
     tty: true
     ports:
       - "9090:3306"
     volumes:
-      - db_data:/var/lib/mysql
+      - dbdata:/var/lib/mysql
     environment:
       MYSQL_DATABASE: laravel
       MYSQL_ROOT_PASSWORD: bajbciu2dbwc
-      MYSQL_USER: laravel_user
-      MYSQL_PASSWORD: ventanillaunicacu2vaAZ
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     networks:
