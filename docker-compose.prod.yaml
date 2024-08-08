@@ -54,17 +54,20 @@ services:
       - laravel
   #mysql
   mysql:
-    image: mysql:5.7.22
+    image: 'mysql/mysql-server:8.0'
     container_name: mysql
     restart: unless-stopped
     tty: true
     ports:
-      - "9090:3306"
+      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: bajbciu2dbwc
+      MYSQL_DATABASE: 'laravel'
+      MYSQL_ROOT_PASSWORD: 'bajbciu2dbwc'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_USER: 'laravel_user'
+      MYSQL_PASSWORD: 'bajbciu2dbwc'
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     networks:
