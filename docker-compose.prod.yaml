@@ -65,11 +65,11 @@ services:
     environment:
       MYSQL_DATABASE: 'laravel'
       MYSQL_ROOT_PASSWORD: 'bajbciu2dbwc'
-      MYSQL_ROOT_HOST: "%"
       MYSQL_USER: 'laravel_user'
       MYSQL_PASSWORD: 'bajbciu2dbwc'
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+    command: --disable-partition-engine-check
     networks:
       - laravel
   #phpmyadmin
