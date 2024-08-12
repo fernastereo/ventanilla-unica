@@ -54,53 +54,31 @@ services:
       - laravel
   #postgres
   postgres:
-    image: postgres:14-alpine
+    image: postgres
     container_name: postgres
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
-      - ~/apps/postgres:/var/lib/postgresql/data
+      - ~/apps/postgres:/var/lib/postgresql@16/data
     environment:
-      - POSTGRES_PASSWORD=S3cret
-      - POSTGRES_USER=citizix_user
-      - POSTGRES_DB=citizix_db
+      POSTGRES_USER: laravel_user
+      POSTGRES_PASSWORD: bajbciu2dbwc
+      POSTGRES_DB: laravel
     networks:
       - laravel
-  # #mysql
-  # mysql:
-  #   image: 'mysql:5.7'
-  #   container_name: mysql
-  #   restart: unless-stopped
-  #   tty: true
-  #   ports:
-  #     - "3306:3306"
-  #   volumes:
-  #     - db_data:/var/lib/mysql
-  #   environment:
-  #     MYSQL_DATABASE: 'laravel'
-  #     MYSQL_ROOT_PASSWORD: 'bajbciu2dbwc'
-  #     MYSQL_USER: 'laravel_user'
-  #     MYSQL_PASSWORD: 'bajbciu2dbwc'
-  #     SERVICE_TAGS: dev
-  #     SERVICE_NAME: mysql
-  #   command: --disable-partition-engine-check
-  #   networks:
-  #     - laravel
-  # #phpmyadmin
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   platform: linux/amd64
-  #   container_name: phpmyadmin_bd
-  #   depends_on:
-  #     - mysql
-  #   restart: unless-stopped
-  #   ports:
-  #     - "5010:80"
-  #   environment:
-  #     PMA_HOST: mysql
-  #     MYSQL_ROOT_PASSWORD: secret
-  #   networks:
-  #     - laravel
+  #pgadmin
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@ventanilla.com"
+      PGADMIN_DEFAULT_PASSWORD: "secret"
+    depends_on:
+      - postgres
+    networks:
+      - laravel
   #npm
   npm:
     image: node:latest
@@ -149,8 +127,6 @@ services:
       - laravel
 networks:
   laravel:
-volumes:
-  db_data:
 # docker-compose up -d --build
 # docker-compose run --rm artisan [COMMAND]
 # docher-compose run --rm composer [COMMAND] (create-project laravel/laravel .)
