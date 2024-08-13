@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\Cors;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -21,8 +22,9 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->validateCsrfTokens(except: [
-            env('APP_URL') . '/api/peticions',
+            '/api/peticions',
         ]);
+        $middleware->append(Cors::class); 
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
