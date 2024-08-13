@@ -22,3 +22,6 @@ Route::get('/tipopeticions', [TipopeticionController::class, 'index']);
 Route::get('/test', function () {
     return response()->json(['message' => 'Test performed successfully!']);
 });
+Route::post('/testp', function () {
+    return response()->json(['message' => 'Test Post performed successfully!']);
+});

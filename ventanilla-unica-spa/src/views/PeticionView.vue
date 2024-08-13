@@ -23,22 +23,23 @@
   });
 
   const handleSubmit = async (e) => {
-    const result = await axios.post(apiUrl + '/peticions', form, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      }
-    });
+    const result = await axios.post(apiUrl + '/peticions', form, {});
     
     showResult.value = result.data.radicado;
     errorResult.value = result.data.error;
     console.log(result.data);
+  }
+
+  const runTest = async () => {
+    let {data} = await axios.get(apiUrl + '/testp');
+    console.log(data);
   }
 </script>
 
 <template>
   <div class="container">
     <div class="row justify-content-center">
+      <button class="btn btn-primary" @click="runTest">runTest</button>
       <h2 class="text-center">Curaduría Urbana 2 de Valledupar</h2>
       <h3 class="text-center">Arq. Arianna Zuleta Oñate</h3>
       <h4 class="text-center mb-2">Servicio de Ventanilla Unica de Recepción de Solicitudes</h4>
