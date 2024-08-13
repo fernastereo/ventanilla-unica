@@ -2,8 +2,8 @@
   import { ref, onMounted, reactive } from 'vue'
   import axios from 'axios';
   
-  axios.withCredentials = true;
-
+  axios.defaults.withCredentials = true;
+  
   const apiUrl = import.meta.env.VITE_APP_API_URL;
   const webUrl = import.meta.env.VITE_APP_WEB_URL;
   const tipopeticions = ref([]);
@@ -25,7 +25,7 @@
   });
 
   const handleSubmit = async (e) => {
-    const result = await axios.post(apiUrl + '/peticions/', form);
+    const result = await axios.post(apiUrl + '/peticions', form);
     
     showResult.value = result.data.radicado;
     errorResult.value = result.data.error;
