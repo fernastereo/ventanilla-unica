@@ -21,7 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->validateCsrfTokens(except: [
-            '/api/peticions',
+            env('APP_URL') . '/api/peticions',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

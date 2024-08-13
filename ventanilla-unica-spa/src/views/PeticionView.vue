@@ -14,7 +14,7 @@
     telefono: null,
     tipoPeticionId: null,
     mensaje: null,
-    archivo: null
+    // archivo: null
   });
 
   onMounted(async () => {
