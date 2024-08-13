@@ -31,7 +31,7 @@
   }
 
   const runTest = async () => {
-    let {data} = await axios.get(apiUrl + '/testp');
+    let {data} = await axios.post(apiUrl + '/testp');
     console.log(data);
   }
 </script>
