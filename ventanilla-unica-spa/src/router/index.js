@@ -8,11 +8,11 @@ import ListadoPeticionesView from '@/views/ListadoPeticionesView.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'login',
-    //   component: LoginView,
-    // },
+    {
+      path: '/',
+      name: 'login',
+      component: LoginView,
+    },
     // {
     //   path: '/signup',
     //   name: 'signup',

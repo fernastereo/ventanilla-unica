@@ -18,12 +18,12 @@
   });
 
   onMounted(async () => {
-    const {data} = await axios.get(apiUrl + '/tipopeticions');
+    const {data} = await axios.get(apiUrl + '/api/tipopeticions');
     tipopeticions.value = data;
   });
 
   const handleSubmit = async (e) => {
-    const result = await axios.post(apiUrl + '/peticions', form, {});
+    const result = await axios.post(apiUrl + '/api/peticions', form, {});
     
     showResult.value = result.data.radicado;
     errorResult.value = result.data.error;

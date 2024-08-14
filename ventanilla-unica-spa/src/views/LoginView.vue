@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
+const apiUrl = import.meta.env.VITE_APP_API_URL;
 axios.defaults.withCredentials = true;
 axios.defaults.withXSRFToken = true;
 
@@ -17,26 +18,26 @@ const user = ref();
 const testResult = ref();
 
 const onLogin = async () => {
-  await axios.get('http://localhost:5000/sanctum/csrf-cookie');
+  await axios.get(apiUrl + '/sanctum/csrf-cookie');
 
-  const result = await axios.post('http://localhost:5000/login', {
+  const result = await axios.post(apiUrl + '/login', {
     email: form.value.email,
     password: form.value.password
   });
   router.push({name: "dashboard"});
   
-  // let {data} = await axios.get('http://localhost:5000/api/user');
+  // let {data} = await axios.get(apiUrl + '/api/user');
   // //if user is logged in then redirect to dashboard route
   // user.value = data;
 }
 
 const onLogout = async () => {
-  await axios.post('http://localhost:5000/logout');
+  await axios.post(apiUrl + '/logout');
   user.value = null;
 }
 
 const runTest = async () => {
-  let {data} = await axios.get('http://localhost:5000/api/test');
+  let {data} = await axios.get(apiUrl + '/api/test');
   testResult.value = data;
 }
 
@@ -46,23 +47,23 @@ function getCookie(name) {
 }
 
 const onIndex = async () => {
-  let {data} = await axios.get('http://localhost:5000/api/tipopeticions');
+  let {data} = await axios.get(apiUrl + '/api/tipopeticions');
   user.value = data;
 }
 const onStore = async () => {
-  let {data} = await axios.post('http://localhost:5000/api/peticions');
+  let {data} = await axios.post(apiUrl + '/api/peticions');
   user.value = data;
 }
 const onShow = async () => {
-  let {data} = await axios.get('http://localhost:5000/api/peticions/1');
+  let {data} = await axios.get(apiUrl + '/api/peticions/1');
   user.value = data;
 }
 const onUpdate = async () => {
-  let {data} = await axios.put('http://localhost:5000/api/peticions/1');
+  let {data} = await axios.put(apiUrl + '/api/peticions/1');
   user.value = data;
 }
 const onDestroy = async () => {
-  let {data} = await axios.delete('http://localhost:5000/api/peticions/1');
+  let {data} = await axios.delete(apiUrl + '/api/peticions/1');
   user.value = data;
 }
 </script>
