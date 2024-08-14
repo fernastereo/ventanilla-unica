@@ -1,8 +1,9 @@
 <script setup>
   import axios from 'axios';
 
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
   const onLogout = async () => {
-    await axios.post('http://localhost:5000/logout');
+    await axios.post(apiUrl + '/logout');
   }
 </script>
 
