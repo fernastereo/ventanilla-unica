@@ -13,16 +13,16 @@ const router = createRouter({
       name: 'login',
       component: LoginView,
     },
-    // {
-    //   path: '/signup',
-    //   name: 'signup',
-    //   component: SignUpView,
-    // },
-    // {
-    //   path: '/dashboard',
-    //   name: 'dashboard',
-    //   component: DashboardView,
-    // },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: SignUpView,
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: DashboardView,
+    },
     {
       path: '/peticion',
       name: 'peticion',
