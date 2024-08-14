@@ -26,9 +26,9 @@ const onLogin = async () => {
   });
   router.push({name: "dashboard"});
   
-  // let {data} = await axios.get(apiUrl + '/api/user');
-  // //if user is logged in then redirect to dashboard route
-  // user.value = data;
+  let {data} = await axios.get(apiUrl + '/api/user');
+  //if user is logged in then redirect to dashboard route
+  user.value = data;
 }
 
 const onLogout = async () => {
