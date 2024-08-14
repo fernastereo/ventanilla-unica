@@ -24,7 +24,7 @@ const onLogin = async () => {
     email: form.value.email,
     password: form.value.password
   });
-  router.push({name: "dashboard"});
+  router.push({name: "peticion"});
   
   let {data} = await axios.get(apiUrl + '/api/user');
   //if user is logged in then redirect to dashboard route
