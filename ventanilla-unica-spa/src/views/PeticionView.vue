@@ -24,8 +24,8 @@
 
   const handleSubmit = async (e) => {
     await axios.get(apiUrl + '/sanctum/csrf-cookie');
-    
-    const result = await axios.post(apiUrl + '/api/peticions', form, {});
+
+    const result = await axios.post(apiUrl + '/api/peticions', form);
     
     showResult.value = result.data.radicado;
     errorResult.value = result.data.error;
