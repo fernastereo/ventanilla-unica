@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
+const route = useRoute();
+const sender = route.query.sender;
 const router = useRouter();
 
 const apiUrl = import.meta.env.VITE_APP_API_URL;
@@ -26,9 +28,9 @@ const onLogin = async () => {
   });
   router.push({name: "peticion"});
   
-  let {data} = await axios.get(apiUrl + '/api/user');
+  // let {data} = await axios.get(apiUrl + '/api/user');
   //if user is logged in then redirect to dashboard route
-  user.value = data;
+  // user.value = data;
 }
 
 const onLogout = async () => {
@@ -70,12 +72,6 @@ const onDestroy = async () => {
 
 <template>
   <div>
-    <header>
-      <div class="wrapper">
-        <HelloWorld msg="You did it!!" />
-      </div>
-    </header>
-
     <main>
       {{ user }}
       <form @submit.prevent="onLogin">
@@ -89,7 +85,7 @@ const onDestroy = async () => {
           <input id="password" type="password" v-model="form.password" required />
         </div>
 
-        <button>Login</button>
+        <button class="btn btn-primary">Login</button>
       </form>
       <br/>
       <RouterLink to="/signup" class="btn btn-primary">Sign Up</RouterLink>
@@ -112,31 +108,4 @@ const onDestroy = async () => {
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-
 </style>

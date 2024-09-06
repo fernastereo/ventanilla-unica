@@ -1,7 +1,9 @@
 <script setup>
   import { ref, onMounted, reactive } from 'vue'
   import axios from 'axios';
+  import { useRouter } from 'vue-router';
   
+  const router = useRouter();
   const apiUrl = import.meta.env.VITE_APP_API_URL;
   const webUrl = import.meta.env.VITE_APP_WEB_URL;
   const tipopeticions = ref([]);
@@ -29,6 +31,11 @@
     errorResult.value = result.data.error;
     console.log(result.data);
   }
+
+  const onLogout = async () => {
+    await axios.post(apiUrl + '/logout');
+    router.push({name: "login"});
+  }
 </script>
 
 <template>
@@ -37,6 +44,8 @@
       <h2 class="text-center">Curaduría Urbana 2 de Valledupar</h2>
       <h3 class="text-center">Arq. Arianna Zuleta Oñate</h3>
       <h4 class="text-center mb-2">Servicio de Ventanilla Unica de Recepción de Solicitudes</h4>
+      <br/>
+      <button class="btn btn-primary" @click="onLogout">logout</button>
       <div class="col-md-10">
         <div v-if="showResult" class="alert" v-bind:class="{ 'alert-danger': errorResult, 'alert-success': !errorResult }" role="alert">
           {{ errorResult ? 'Error al enviar la solicitud' : 'Solicitud enviada con exito' }}. Su radicado es: {{ showResult }}
