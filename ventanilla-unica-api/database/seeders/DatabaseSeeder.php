@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\Tipopeticion;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,12 +16,6 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => bcrypt('secret123'),
-        ]);
 
         Tipopeticion::factory()->create([
             'descripcion'   => 'Aclaratoria de Licencia',
@@ -46,5 +41,33 @@ class DatabaseSeeder extends Seeder
             'descripcion'   => 'Quejas - Reclamos',
             'activo'        => true
         ]);
+
+        Role::factory()->create([
+            'name' => 'Admin',
+            'is_active' => true,
+        ]);
+
+        Role::factory()->create([
+            'name' => 'User',
+            'is_active' => true,
+        ]);
+
+        Role::factory()->create([
+            'name' => 'Client',
+            'is_active' => true,
+        ]);
+
+        Role::factory()->create([
+            'name' => 'User_Client',
+            'is_active' => true,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => bcrypt('secret123'),
+            'role_id' => 1,
+        ]);
+
     }
 }
