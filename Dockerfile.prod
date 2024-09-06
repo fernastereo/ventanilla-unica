@@ -1,5 +1,5 @@
 # Use the node image from official Docker hub
-FROM node:16.13.0-alpine3.14 AS bulid-stage
+FROM node:18.3.0-alpine AS build-stage
 
 # Set the working directory
 WORKDIR /app
@@ -21,7 +21,7 @@ RUN npm run build
 FROM nginx:1.21.3-alpine
 
 # Copy the build files from the previous stage
-COPY --from=bulid-stage /app/dist /usr/share/nginx/html
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 
 # Copy the nginx configuration file
 COPY ./nginx/spa-prod.conf /etc/nginx/conf.d/default.conf
