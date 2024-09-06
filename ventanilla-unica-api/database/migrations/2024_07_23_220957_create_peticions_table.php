@@ -21,6 +21,8 @@ return new class extends Migration
             $table->dateTime('fecha_peticion');
             $table->string('vigencia');
             $table->bigInteger('radicado');
+            $table->foreignId('user_id');
+            $table->foreignId('client_id');
             $table->timestamps();
         });
     }

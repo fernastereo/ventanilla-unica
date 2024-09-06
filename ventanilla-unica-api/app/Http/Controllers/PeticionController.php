@@ -59,7 +59,7 @@ class PeticionController extends Controller
                 // Mail::to($peticion->email)->send(new PeticionEnviada($peticion));
                 return response()->json([
                     'message' => 'Peticion creada con exito!',
-                    'radicado' => 'VU-CU2VA-' . str_pad($peticion->radicado + 1, 4, '0', STR_PAD_LEFT) . "-$peticion->vigencia",
+                    'radicado' => 'VU-CU2VA-' . str_pad($peticion->radicado, 4, '0', STR_PAD_LEFT) . "-$peticion->vigencia",
                     'error'  => false
                 ], 200);
             } else {

@@ -17,7 +17,9 @@ class Peticion extends Model
         'mensaje',
         'fecha_peticion',
         'vigencia',
-        'radicado'
+        'radicado',
+        'user_id',
+        'client_id',
     ];
 
     public function tipopeticion() {
@@ -26,5 +28,15 @@ class Peticion extends Model
 
     public function adjuntos(){
         return $this->hasMany(Adjunto::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 }
