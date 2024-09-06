@@ -3,9 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Role;
-use App\Models\Tipopeticion;
 use App\Models\User;
+use App\Models\Client;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Tipopeticion;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -63,10 +64,20 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Fernando E. Cueto',
+            'email' => 'fernandoecueto@gmail.com',
             'password' => bcrypt('secret123'),
             'role_id' => 1,
+        ]);
+
+        Client::factory()->create([
+            'name' => 'CSS S.A.S.',
+            'email' => 'info@css-sas.com',
+            'phone' => '1234567890',
+            'address' => 'Calle 123 # 123 - 123',
+            'city' => 'Berlin',
+            'status' => 'Activo',
+            'is_active' => true,
         ]);
 
     }
