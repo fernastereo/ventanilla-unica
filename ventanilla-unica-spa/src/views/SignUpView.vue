@@ -2,6 +2,10 @@
   import { useUserStore } from '../stores/users';
   import { reactive } from 'vue';
   import { storeToRefs } from 'pinia';
+  import { useRoute } from 'vue-router';
+
+  const route = useRoute();
+  const clientId = route.params.client_id;
 
   const userStore = useUserStore();
   const { errorMessage } = storeToRefs(userStore);
@@ -21,7 +25,8 @@
 </script>
 
 <template>
-  <div class="">
+  <div class="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
+    <div class="flex-1">
     <h1>SignUp</h1>
     <form @submit.prevent="onSubmit">
       <div class="">
@@ -45,5 +50,10 @@
       </div>
       <button type="submit" class="">Enviar</button>
     </form>
+
+    <p class="mt-6 text-sm text-center text-gray-400">Ya tiene una cuenta?
+      <RouterLink :to="`/login/${clientId}`" class="text-blue-500 focus:outline-none focus:underline hover:underline">Inicie Sesión Aqui</RouterLink>.
+    </p>
+    </div>
   </div>
 </template>

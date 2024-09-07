@@ -34,7 +34,7 @@
 
   const onLogout = async () => {
     await axios.post(apiUrl + '/logout');
-    router.push({name: "login"});
+    router.push({name: "login", params: {client_id: 1}});
   }
 </script>
 
