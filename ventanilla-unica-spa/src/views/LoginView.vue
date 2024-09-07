@@ -47,14 +47,14 @@ const onLogout = async () => {
           <input id="password" type="password" v-model="form.password" required />
         </div>
 
-        <button class="btn btn-primary">Login</button>
+        <button class="">Login</button>
       </form>
       <br/>
-      <RouterLink :to="`/signup/${clientId}`" class="btn btn-primary">Sign Up</RouterLink>
+      <RouterLink :to="`/signup/${clientId}`" class="">Sign Up</RouterLink>
       
       <br/>
       <br/>
-      <button class="btn btn-primary" @click="onLogout">logout</button>
+      <button class="" @click="onLogout">logout</button>
     </main>
   </div>
 </template>

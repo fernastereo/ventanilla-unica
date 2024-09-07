@@ -13,9 +13,9 @@
 </script>
 
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <table class="table table-striped">
+  <div class="">
+    <div class="">
+      <table class="">
         <thead>
           <tr>
             <th scope="col">Radicado</th>
@@ -33,7 +33,7 @@
             <td>{{ peticion.tipopeticion.descripcion }}</td>
             <td><a href="mailto:{{ peticion.email }}">{{ peticion.nombre }}</a></td>
             <td>{{ peticion.telefono }}</td>
-            <td><span class="badge bg-success">Finalizado</span></td>
+            <td><span class="">Finalizado</span></td>
           </tr>
         </tbody>
       </table>

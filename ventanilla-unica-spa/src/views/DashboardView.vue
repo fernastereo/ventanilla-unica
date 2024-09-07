@@ -7,12 +7,12 @@
   }
 
   const form = {
-    nombre: 'Fernando E. Cueto',
-    email: 'fernandoecueto@gmail.com',
-    telefono: '3017560109',
-    tipoPeticionId: '1',
-    mensaje: 'Prueba Por Codigo',
-    // archivo: null
+    nombre: '',
+    email: '',
+    telefono: '',
+    tipoPeticionId: '',
+    mensaje: '',
+    archivo: null
   }
 
   const onStore = async () => {
@@ -25,9 +25,9 @@
   <div>
     <h1>Dashboard view</h1>
     <br/>
-      <button class="btn btn-primary" @click="onStore">Store</button>
+      <button class="" @click="onStore">Store</button>
     <br/>
-      <button class="btn btn-primary" @click="onLogout">logout</button>
+      <button class="" @click="onLogout">logout</button>
   </div>
 </template>
 
