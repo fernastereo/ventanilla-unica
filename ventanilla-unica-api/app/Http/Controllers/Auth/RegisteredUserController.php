@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->string('password')),
             'role_id' => $request->role_id,
             'client_id' => $request->client_id,
-            'token' => Str::random(50),
+            'confirmation_token' => Str::random(50),
         ]);
 
         event(new Registered($user));

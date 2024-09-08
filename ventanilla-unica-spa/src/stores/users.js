@@ -40,6 +40,8 @@ export const useUserStore = defineStore('users', () => {
       email: credentials.email,
       password: credentials.password,
       password_confirmation: credentials.password_confirmation,
+      role_id: credentials.role_id,
+      client_id: credentials.client_id,
     });
 
     console.log(result);
