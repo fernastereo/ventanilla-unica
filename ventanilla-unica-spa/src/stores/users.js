@@ -12,7 +12,8 @@ export const useUserStore = defineStore('users', () => {
   const handleLogin = () => {};
 
   const handleSignUp = async (credentials) => {
-    const { email, password, name, role_id, client_id } = credentials;
+    const { email, password, password_confirmation, name, role_id, client_id } =
+      credentials;
 
     if (password.length < 8) {
       return (errorMessage.value =
@@ -29,22 +30,45 @@ export const useUserStore = defineStore('users', () => {
       return (errorMessage.value = 'Invalid email');
     }
 
-    errorMessage.value = '';
-
     //validate if user already exists
+    // const response =  await axios.get(apiUrl + '/api/user');
 
     //create user
-    await axios.get(apiUrl + '/sanctum/csrf-cookie');
-    const result = await axios.post(apiUrl + '/register', {
-      name: credentials.name,
-      email: credentials.email,
-      password: credentials.password,
-      password_confirmation: credentials.password_confirmation,
-      role_id: credentials.role_id,
-      client_id: credentials.client_id,
-    });
+    try {
+      await axios.get(apiUrl + '/sanctum/csrf-cookie');
+      const response = await axios.post(apiUrl + '/register', {
+        name: name,
+        email: email,
+        password: password,
+        password_confirmation: password_confirmation,
+        role_id: role_id,
+        client_id: client_id,
+      });
+      return (errorMessage.value = '');
+      // console.log(response);
+    } catch (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
 
-    console.log(result);
+        if (error.response.status === 422) {
+          // Handle validation error (422 Unprocessable Entity)
+          return (errorMessage.value = error.response.data.message);
+          // You can display these errors to the user in your UI
+        } else {
+          // Handle other errors (e.g., 500 Internal Server Error)
+          return (errorMessage.value = error.response.data.message);
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        return (errorMessage.value = 'No response received:'); //, error.request);
+      } else {
+        // Something else happened while setting up the request
+        return (errorMessage.value = error.message);
+      }
+    }
+
+    errorMessage.value = '';
   };
 
   const handleLogout = () => {};
