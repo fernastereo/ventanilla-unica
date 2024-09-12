@@ -18,4 +18,9 @@ class Tipopeticion extends Model
     {
         return $this->hasMany(Peticion::class);
     }
+
+    public function subtipopeticions()
+    {
+        return $this->hasMany(Subtipopeticion::class);
+    }
 }
