@@ -138,11 +138,12 @@
             <input id="search-field" class="block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm" placeholder="Buscar..." type="search" name="search" />
           </form>
           <div class="flex items-center gap-x-4 lg:gap-x-6">
-            <button type="button" class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
-              <span class="sr-only">Ver Notificaciones</span>
-              <BellIcon class="h-6 w-6" aria-hidden="true" />
-            </button>
-
+            <div class="notifications-container">
+              <button type="button" class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
+                <BellIcon class="h-6 w-6" aria-hidden="true" />
+              </button>
+              <span class="inline-flex items-center rounded-full bg-red-100 px-1.5 py-0.5 text-xs font-medium text-red-700 notification-badge">3</span>
+            </div>
             <!-- Separator -->
             <div class="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10" aria-hidden="true"></div>
 
@@ -178,5 +179,13 @@
 </template>
 
 <style scoped>
+  .notifications-container{
+    position: relative;
+  }
 
+  .notification-badge{
+    position: absolute;
+    top: -10px;
+    left: 10px;
+  }
 </style>
