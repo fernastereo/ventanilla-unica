@@ -35,18 +35,18 @@ const router = createRouter({
       name: 'dashboard',
       component: DashboardView,
       meta: { requiresAuth: true },
-    },
-    {
-      path: '/peticion',
-      name: 'peticion',
-      component: PeticionView,
-      meta: { requiresAuth: true },
-    },
-    {
-      path: '/listadopeticiones',
-      name: 'listadopeticiones',
-      component: ListadoPeticionesView,
-      meta: { requiresAuth: true },
+      children: [
+        {
+          path: '/peticion',
+          name: 'peticion',
+          component: PeticionView,
+        },
+        {
+          path: '/listadopeticiones',
+          name: 'listadopeticiones',
+          component: ListadoPeticionesView,
+        },
+      ],
     },
   ],
 });
