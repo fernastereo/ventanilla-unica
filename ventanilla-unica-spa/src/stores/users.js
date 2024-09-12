@@ -5,11 +5,45 @@ import axios from 'axios';
 export const useUserStore = defineStore('users', () => {
   const user = ref(null);
   const errorMessage = ref('');
+  const loading = ref(false);
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const apiUrl = import.meta.env.VITE_APP_API_URL;
   axios.defaults.withCredentials = true;
   axios.defaults.withXSRFToken = true;
 
-  const handleLogin = () => {};
+  const handleLogin = async (credentials) => {
+    const { email, password } = credentials;
+    //validate email
+    if (!emailRegex.test(email)) {
+      return (errorMessage.value = 'Invalid email');
+    }
+
+    if (!password.length) {
+      return (errorMessage.value = 'Password cannot be empty');
+    }
+
+    try {
+      loading.value = true;
+
+      await axios.get(apiUrl + '/sanctum/csrf-cookie');
+      await axios.post(apiUrl + '/login', {
+        email: email,
+        password: password,
+      });
+
+      const response = await axios.get(apiUrl + '/api/user');
+      loading.value = false;
+
+      return (user.value = response.data);
+    } catch (error) {
+      loading.value = false;
+      return (errorMessage.value = error.message);
+    } finally {
+      loading.value = false;
+      errorMessage.value = '';
+    }
+  };
 
   const handleSignUp = async (credentials) => {
     const { email, password, password_confirmation, name, role_id, client_id } =
@@ -25,18 +59,15 @@ export const useUserStore = defineStore('users', () => {
     }
 
     //validate email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return (errorMessage.value = 'Invalid email');
     }
 
-    //validate if user already exists
-    // const response =  await axios.get(apiUrl + '/api/user');
-
     //create user
     try {
+      loading.value = true;
       await axios.get(apiUrl + '/sanctum/csrf-cookie');
-      const response = await axios.post(apiUrl + '/register', {
+      await axios.post(apiUrl + '/register', {
         name: name,
         email: email,
         password: password,
@@ -44,40 +75,35 @@ export const useUserStore = defineStore('users', () => {
         role_id: role_id,
         client_id: client_id,
       });
+      loading.value = false;
       return (errorMessage.value = '');
-      // console.log(response);
     } catch (error) {
+      loading.value = false;
       if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-
         if (error.response.status === 422) {
-          // Handle validation error (422 Unprocessable Entity)
           return (errorMessage.value = error.response.data.message);
-          // You can display these errors to the user in your UI
         } else {
-          // Handle other errors (e.g., 500 Internal Server Error)
           return (errorMessage.value = error.response.data.message);
         }
       } else if (error.request) {
-        // The request was made but no response was received
         return (errorMessage.value = 'No response received:'); //, error.request);
       } else {
-        // Something else happened while setting up the request
         return (errorMessage.value = error.message);
       }
+    } finally {
+      loading.value = false;
+      errorMessage.value = '';
     }
-
-    errorMessage.value = '';
   };
 
-  const handleLogout = () => {};
+  const handleLogout = (credentials) => {};
 
   const getUser = () => {};
 
   return {
     user,
     errorMessage,
+    loading,
     handleLogin,
     handleSignUp,
     handleLogout,
