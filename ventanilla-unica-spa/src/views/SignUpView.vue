@@ -3,13 +3,14 @@
   import { reactive } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useRoute, useRouter } from 'vue-router';
+  import Spinner from '../components/Spinner.vue';
 
   const router = useRouter();
   const route = useRoute();
   const clientId = route.params.client_id;
 
   const userStore = useUserStore();
-  const { errorMessage } = storeToRefs(userStore);
+  const { user, errorMessage, loading } = storeToRefs(userStore);
 
   const userCredentials = reactive({
     name: "",
@@ -23,8 +24,9 @@
   const onSubmit = async () => {
     await userStore.handleSignUp(userCredentials);
 
-    if (!errorMessage.value)
+    if (!errorMessage.value) {
       router.push({name: "peticion"});
+    }
   }
 </script>
 
@@ -58,6 +60,7 @@
           <div class="mt-3">
             <p class="text-xs text-red-600" v-if="errorMessage">{{errorMessage}}</p>
           </div>
+          <Spinner :show="loading" /> 
           <div class="mt-12">
             <button
                 class="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">

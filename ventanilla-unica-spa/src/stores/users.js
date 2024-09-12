@@ -41,7 +41,6 @@ export const useUserStore = defineStore('users', () => {
       return (errorMessage.value = error.message);
     } finally {
       loading.value = false;
-      errorMessage.value = '';
     }
   };
 
@@ -75,8 +74,11 @@ export const useUserStore = defineStore('users', () => {
         role_id: role_id,
         client_id: client_id,
       });
+
+      const response = await axios.get(apiUrl + '/api/user');
       loading.value = false;
-      return (errorMessage.value = '');
+
+      return (user.value = response.data);
     } catch (error) {
       loading.value = false;
       if (error.response) {
@@ -92,7 +94,6 @@ export const useUserStore = defineStore('users', () => {
       }
     } finally {
       loading.value = false;
-      errorMessage.value = '';
     }
   };
 
