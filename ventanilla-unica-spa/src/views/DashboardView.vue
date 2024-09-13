@@ -159,8 +159,8 @@
               </MenuButton>
               <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                 <MenuItems class="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                    <a :class="'block px-3 py-1 text-sm leading-6 text-gray-900'">Mi Perfil</a>
-                    <a @click="onLogout(user.client_id)" :class="'block px-3 py-1 text-sm leading-6 text-gray-900'">Cerrar Sesión</a>
+                    <a :class="'block px-3 py-1 text-sm leading-6 text-gray-900 cursor-pointer'">Mi Perfil</a>
+                    <a @click="onLogout(user.client_id)" :class="'block px-3 py-1 text-sm leading-6 text-gray-900 cursor-pointer'">Cerrar Sesión</a>
                 </MenuItems>
               </transition>
             </Menu>
