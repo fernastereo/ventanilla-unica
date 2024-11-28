@@ -97,7 +97,14 @@ export const useUserStore = defineStore('users', () => {
     }
   };
 
-  const handleLogout = (credentials) => {};
+  const handleLogout = async () => {
+    try {
+      console.log('Logout');
+      await axios.post(apiUrl + '/logout');
+    } catch (error) {
+      return (errorMessage.value = error.response.data.message);
+    }
+  };
 
   const getUser = () => {};
 

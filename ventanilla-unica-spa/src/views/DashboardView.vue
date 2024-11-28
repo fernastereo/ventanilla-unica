@@ -15,7 +15,6 @@
   } from '@heroicons/vue/24/outline'
   import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
-  import axios from 'axios';
   import { useUserStore } from '@/stores/users';
   import { storeToRefs } from 'pinia';
   import { useRouter } from 'vue-router';
@@ -25,9 +24,9 @@
   
   const router = useRouter();
   
-  const apiUrl = import.meta.env.VITE_APP_API_URL;
   const onLogout = async (clientId) => {
-    await axios.post(apiUrl + '/logout');
+    await userStore.handleLogout();
+
     router.push({name: "login", params: {client_id: clientId}});
   }
 
