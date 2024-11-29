@@ -14,11 +14,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/dashboard', function () {
         return response()->json(['message' => 'Dashboard accessed successfully!']);
     });
-    Route::apiResource('peticions', PeticionController::class);
 });
 
-Route::get('/tipopeticions', [TipopeticionController::class, 'index']);
+//Route::get('/tipopeticions', [TipopeticionController::class, 'index']);
 
-Route::get('/test', function () {
-    return response()->json(['message' => 'Test performed successfully!']);
-});
