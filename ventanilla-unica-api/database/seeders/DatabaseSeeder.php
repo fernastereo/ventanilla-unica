@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Role;
 use App\Models\User;
-use App\Models\Client;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -22,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => 1,
         ]);
 
-        // $this->call(TipopeticionsTableSeeder::class);
+        $this->call(RequestTypeSeeder::class);
 
     }
 }
