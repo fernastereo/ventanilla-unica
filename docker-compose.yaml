@@ -59,7 +59,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ~/apps/postgres:/var/lib/postgresql@16/data
+      - postgres_data:/var/lib/postgresql@16/data
     environment:
       POSTGRES_USER: laravel_user
       POSTGRES_PASSWORD: bajbciu2dbwc
@@ -79,7 +79,7 @@ services:
       - postgres
     networks:
       - laravel
-  #npm
+    #npm
   npm:
     image: node:latest
     container_name: npm
@@ -99,6 +99,8 @@ services:
   #     - laravel
 networks:
   laravel:
+volumes:
+  postgres_data:
 # docker-compose up -d --build
 # docker-compose run --rm artisan [COMMAND]
 # docher-compose run --rm composer [COMMAND] (create-project laravel/laravel .)
