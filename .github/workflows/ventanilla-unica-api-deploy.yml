@@ -30,6 +30,7 @@ jobs:
         cd ventanilla-unica/
         git reset --hard
         git pull origin master
+        cd ventanilla-unica-api/
         composer install --no-dev --optimize-autoloader
         php artisan migrate --force
         php artisan config:cache
