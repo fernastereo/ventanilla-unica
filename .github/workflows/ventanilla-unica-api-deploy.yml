@@ -1,0 +1,37 @@
+name: Ventanilla Unica Deploy
+
+on:
+  workflow_run:
+    workflows: ["Ventanilla Unica Tests"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+    # Configura la llave SSH
+    - name: Setup SSH Key
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    # Ejecuta los pasos de despliegue
+    - name: Pull latest code and deploy
+      run: |
+        ssh user@${{ secrets.SERVER_IP }} << 'EOF'
+        cd /ventanilla-unica
+        git reset --hard
+        git pull origin master
+        composer install --no-dev --optimize-autoloader
+        php artisan migrate --force
+        php artisan config:cache
+        php artisan route:cache
+        php artisan view:cache
+        chmod -R 775 storage bootstrap/cache
+        chown -R www-data:www-data storage bootstrap/cache
+        EOF
