@@ -27,7 +27,7 @@ jobs:
     - name: Pull latest code and deploy
       run: |
         ssh root@${{ secrets.SERVER_IP }} << 'EOF'
-        cd /ventanilla-unica
+        cd ventanilla-unica/
         git reset --hard
         git pull origin master
         composer install --no-dev --optimize-autoloader
