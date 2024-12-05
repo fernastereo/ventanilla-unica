@@ -1,4 +1,4 @@
-name: Laravel
+name: Ventanilla Unica Tests
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  laravel-tests:
+  api-tests:
 
     runs-on: ubuntu-latest
 
@@ -16,27 +16,27 @@ jobs:
       with:
         php-version: '8.2'
     - uses: actions/checkout@v4
-    - name: Navigate to Laravel project directory
+    - name: Navigate to Ventanilla-unica-api directory
       working-directory: ventanilla-unica-api
-      run: echo "Switched to Laravel project directory"
-    - name: Copy .env
+      run: echo "Switched to ventanilla-unica-api directory"
+    - name: Copy .env file
       working-directory: ventanilla-unica-api
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      run: php -r "file_exists('.env') || copy('.env.example', '.env'); || echo ".env file created""
     - name: Install Dependencies
       working-directory: ventanilla-unica-api
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Generate key
       working-directory: ventanilla-unica-api
       run: php artisan key:generate
-    - name: Directory Permissions
+    - name: Grant Directory Permissions
       working-directory: ventanilla-unica-api
       run: chmod -R 777 storage bootstrap/cache
-    - name: Create Database
+    - name: Create Testing Database
       working-directory: ventanilla-unica-api
       run: |
         mkdir -p database
         touch database/database.sqlite
-    - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
+    - name: Execute tests (Unit and Feature tests)
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
