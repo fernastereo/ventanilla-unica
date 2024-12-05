@@ -26,7 +26,7 @@ jobs:
     # Ejecuta los pasos de despliegue
     - name: Pull latest code and deploy
       run: |
-        ssh user@${{ secrets.SERVER_IP }} << 'EOF'
+        ssh root@${{ secrets.SERVER_IP }} << 'EOF'
         cd /ventanilla-unica
         git reset --hard
         git pull origin master
