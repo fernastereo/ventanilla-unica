@@ -42,11 +42,11 @@ jobs:
           git pull origin master
 
           cd ventanilla-unica-api/
-          composer install --no-dev --optimize-autoloader
-          php artisan migrate --force  # If this fails, rollback will trigger
-          php artisan config:cache
-          php artisan route:cache
-          php artisan view:cache
+          docker-compose run --rm composer install --no-dev --optimize-autoloader
+          docker-compose run --rm artisan migrate --force  # If this fails, rollback will trigger
+          docker-compose run --rm  artisan config:cache
+          docker-compose run --rm  artisan route:cache
+          docker-compose run --rm  artisan view:cache
           chmod -R 775 storage bootstrap/cache
           chown -R www-data:www-data storage bootstrap/cache
         EOF
