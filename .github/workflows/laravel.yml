@@ -16,15 +16,23 @@ jobs:
       with:
         php-version: '8.2'
     - uses: actions/checkout@v4
+    - name: Navigate to Laravel project directory
+      working-directory: ventanilla-unica-api
+      run: echo "Switched to Laravel project directory"
     - name: Copy .env
+      working-directory: ventanilla-unica-api
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install Dependencies
+      working-directory: ventanilla-unica-api
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Generate key
+      working-directory: ventanilla-unica-api
       run: php artisan key:generate
     - name: Directory Permissions
+      working-directory: ventanilla-unica-api
       run: chmod -R 777 storage bootstrap/cache
     - name: Create Database
+      working-directory: ventanilla-unica-api
       run: |
         mkdir -p database
         touch database/database.sqlite
@@ -32,4 +40,5 @@ jobs:
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
+      working-directory: ventanilla-unica-api
       run: php artisan test
