@@ -21,7 +21,7 @@ jobs:
       run: echo "Switched to ventanilla-unica-api directory"
     - name: Copy .env file
       working-directory: ventanilla-unica-api
-      run: php -r "file_exists('.env') || copy('.env.example', '.env'); || echo ".env file created""
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');" && echo ".env file created"
     - name: Install Dependencies
       working-directory: ventanilla-unica-api
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
