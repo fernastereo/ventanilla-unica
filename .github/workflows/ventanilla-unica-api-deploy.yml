@@ -25,28 +25,28 @@ jobs:
         ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
     # Ejecuta los pasos de despliegue
     - name: Pull latest code and deploy
-  run: |
-    set -e
-    ssh root@${{ secrets.SERVER_IP }} << 'EOF'
-      set -e
-      
-      # Define rollback function
-      rollback() {
-        echo "Error detected, rolling back..."
-        git reset --hard HEAD@{1}  # Revert to previous commit
-      }
-      trap rollback ERR  # Execute rollback if an error occurs
+      run: |
+        set -e
+        ssh root@${{ secrets.SERVER_IP }} << 'EOF'
+          set -e
+          
+          # Define rollback function
+          rollback() {
+            echo "Error detected, rolling back..."
+            git reset --hard HEAD@{1}  # Revert to previous commit
+          }
+          trap rollback ERR  # Execute rollback if an error occurs
 
-      cd ventanilla-unica/
-      git reset --hard
-      git pull origin master
+          cd ventanilla-unica/
+          git reset --hard
+          git pull origin master
 
-      cd ventanilla-unica-api/
-      composer install --no-dev --optimize-autoloader
-      php artisan migratest --force  # If this fails, rollback will trigger
-      php artisan config:cache
-      php artisan route:cache
-      php artisan view:cache
-      chmod -R 775 storage bootstrap/cache
-      chown -R www-data:www-data storage bootstrap/cache
-    EOF
+          cd ventanilla-unica-api/
+          composer install --no-dev --optimize-autoloader
+          php artisan migratest --force  # If this fails, rollback will trigger
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+          chmod -R 775 storage bootstrap/cache
+          chown -R www-data:www-data storage bootstrap/cache
+        EOF
