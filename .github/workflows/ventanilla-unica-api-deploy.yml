@@ -43,7 +43,7 @@ jobs:
 
           cd ventanilla-unica-api/
           composer install --no-dev --optimize-autoloader
-          php artisan migratest --force  # If this fails, rollback will trigger
+          php artisan migrate --force  # If this fails, rollback will trigger
           php artisan config:cache
           php artisan route:cache
           php artisan view:cache

@@ -8,7 +8,7 @@ Route::get('/', function () {
         'Version' => app()->version(),
         'created by' => 'No Company S.A.S.',
         'email' => 'info@nocompany.co',
-        'country' => 'Colombia 🍺'
+        'country' => 'Colombia 🇨🇴'
     ];
 });
 
