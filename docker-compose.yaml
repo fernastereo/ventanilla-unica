@@ -35,6 +35,7 @@ services:
     volumes:
       - ./ventanilla-unica-api:/var/www/html
     working_dir: /var/www/html
+    user: "${UID:-1000}:${GID:-1000}"
     entrypoint: ['composer']
     networks:
       - laravel

@@ -28,7 +28,6 @@ jobs:
       run: |
         ssh root@${{ secrets.SERVER_IP }} << 'EOF'
         cd ventanilla-unica/
-        ls -l
         git reset --hard
         git pull origin master
         cd ventanilla-unica-api/

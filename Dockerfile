@@ -29,11 +29,14 @@ RUN useradd -G www-data,root -u $uid -d /home/$user $user
 RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user
 
+# Configurar permisos para /var/www/html
+RUN mkdir -p /var/www/html && \
+    chown -R $user:$user /var/www/html && \
+    chmod -R 755 /var/www/html
+
 # Directorio de trabajo
 WORKDIR /var/www/html
 
-# Cambiar al usuario creado
 USER $user
 
-# El contenedor se ejecutará con php-fpm
 CMD ["php-fpm"]
