@@ -24,19 +24,20 @@ RUN docker-php-ext-install pdo pdo_pgsql pgsql mbstring exif pcntl bcmath gd
 # Obtener Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Crear usuario del sistema
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user
+# Crear usuario del sistema y configurar permisos
+RUN useradd -G www-data,root -u $uid -d /home/$user $user && \
+    mkdir -p /home/$user/.composer && \
+    mkdir -p /var/www/html && \
+    chown -R $user:www-data /home/$user && \
+    chown -R $user:www-data /var/www/html && \
+    chmod -R 775 /var/www/html
 
-# Configurar permisos para /var/www/html
-RUN mkdir -p /var/www/html && \
-    chown -R $user:$user /var/www/html && \
-    chmod -R 755 /var/www/html
+# Script para configurar permisos de Laravel
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Directorio de trabajo
 WORKDIR /var/www/html
 
-USER $user
-
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["php-fpm"]
