@@ -26,27 +26,16 @@ jobs:
     # Ejecuta los pasos de despliegue
     - name: Pull latest code and deploy
       run: |
-        set -e
         ssh root@${{ secrets.SERVER_IP }} << 'EOF'
-          set -e
-          
-          # Define rollback function
-          rollback() {
-            echo "Error detected, rolling back..."
-            git reset --hard HEAD@{1}  # Revert to previous commit
-          }
-          trap rollback ERR  # Execute rollback if an error occurs
-
-          cd ventanilla-unica/
-          git reset --hard
-          git pull origin master
-
-          cd ventanilla-unica-api/
-          docker-compose run --rm composer install --no-dev --optimize-autoloader
-          docker-compose run --rm artisan migrate --force  # If this fails, rollback will trigger
-          docker-compose run --rm  artisan config:cache
-          docker-compose run --rm  artisan route:cache
-          docker-compose run --rm  artisan view:cache
-          chmod -R 775 storage bootstrap/cache
-          chown -R www-data:www-data storage bootstrap/cache
+        cd ventanilla-unica/
+        git reset --hard
+        git pull origin master
+        cd ventanilla-unica-api/
+        composer install --no-dev --optimize-autoloader
+        php artisan migrate --force
+        php artisan config:cache
+        php artisan route:cache
+        php artisan view:cache
+        chmod -R 775 storage bootstrap/cache
+        chown -R www-data:www-data storage bootstrap/cache
         EOF
