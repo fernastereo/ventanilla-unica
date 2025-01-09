@@ -26,32 +26,6 @@ services:
     user: 1000:1000
     networks:
       - laravel
-  # composer
-  composer:
-    image: composer:latest
-    container_name: composer
-    user: 1000:1000
-    volumes:
-      - ./ventanilla-unica-api:/var/www/html
-    working_dir: /var/www/html
-    depends_on:
-      - php
-    networks:
-      - laravel
-  #artisan
-  artisan:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: artisan
-    volumes:
-      - ./ventanilla-unica-api:/var/www/html
-    depends_on:
-      - postgres
-    working_dir: /var/www/html
-    entrypoint: ['php', '/var/www/html/artisan']
-    networks:
-      - laravel
   #postgres
   postgres:
     image: postgres
